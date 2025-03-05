@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Assistant Dashboard</title>
+
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #74b3ff, #dfe6e9);
+        text-align: center;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background-color: #0984e3;
+        color: white;
+        font-size: 20px;
+      }
+
+      .logout {
+        background-color: #ff7675;
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+
+      .logout:hover {
+        background-color: #e74c3c;
+      }
+
+      h2 {
+        color: #2d3436;
+        font-weight: 600;
+        margin-top: 20px;
+      }
+
+      table {
+        width: 100%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        overflow: hidden;
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #b2bec3;
+      }
+
+      th {
+        background-color: #0984e3;
+        color: white;
+      }
+
+      input[type="text"] {
+        width: 70%;
+        padding: 8px;
+        border: 1px solid #b2bec3;
+        border-radius: 5px;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      input[type="text"]:focus {
+        border-color: #74b9ff;
+        outline: none;
+        box-shadow: 0 0 8px rgba(116, 185, 255, 0.5);
+      }
+
+      .btn-ask-doctor {
+        background-color: #0984e3;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .btn-ask-doctor:hover {
+        background-color: #74b9ff;
+      }
+
+      .status {
+        font-weight: bold;
+        color: #2d3436;
+      }
+
+      .scroll-container {
+        overflow-x: auto;
+      }
+    </style>
+
+</head>
+<body>
+
+    <div class="header">
+        <div>Lab Assistant Dashboard</div>
+        <a href="/logout_lab" class="logout">Logout</a>
+    </div>
+
+    <h2>Enter User Test Values</h2>
+
+    <div class="scroll-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Phone Number</th>
+                    <th>Baseline Value</th>
+                    <th>Accelerations</th>
+                    <th>Fetal Movement</th>
+                    <th>Uterine Contractions</th>
+                    <th>Light Decelerations</th>
+                    <th>Severe Decelerations</th>
+                    <th>Prolonged Decelerations</th>
+                    <th>Abnormal Short-Term Variability</th>
+                    <th>Mean Short-Term Variability</th>
+                    <th>% Time with Abnormal Long-Term Variability</th>
+                    <th>Mean Long-Term Variability</th>
+                    <th>Histogram Width</th>
+                    <th>Histogram Min</th>
+                    <th>Histogram Max</th>
+                    <th>Histogram Peaks</th>
+                    <th>Histogram Zeroes</th>
+                    <th>Histogram Mode</th>
+                    <th>Histogram Mean</th>
+                    <th>Histogram Median</th>
+                    <th>Histogram Variance</th>
+                    <th>Histogram Tendency</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %} 
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.phone }}</td>
+                        <form action="/submit_test_values/{{ user._id }}" method="post" onsubmit="setPendingStatus('{{ user._id }}')">
+                            {% set features = [
+                                'baseline_value', 'accelerations', 'fetal_movement', 'uterine_contractions',
+                                'light_decelerations', 'severe_decelerations', 'prolongued_decelerations',
+                                'abnormal_short_term_variability', 'mean_value_of_short_term_variability',
+                                'percentage_of_time_with_abnormal_long_term_variability', 'mean_value_of_long_term_variability',
+                                'histogram_width', 'histogram_min', 'histogram_max', 'histogram_number_of_peaks',
+                                'histogram_number_of_zeroes', 'histogram_mode', 'histogram_mean', 'histogram_median',
+                                'histogram_variance', 'histogram_tendency'
+                            ] %}
+
+                            {% for feature in features %}
+                                <td>
+                                    <input type="text" name="{{ feature }}" required>
+                                </td>
+                            {% endfor %}
+                            
+                            <input type="hidden" name="lab_assistant" value="{{ session['username'] }}">
+                            <td><button type="submit" class="btn-ask-doctor">Ask Doctor</button></td>
+                        </form>
+                        <td class="status" id="status_{{ user._id }}">{{ user.status if user.status else 'Nill' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function setPendingStatus(userId) {
+            document.getElementById('status_' + userId).innerText = 'Pending';
+        }
+    </script>
+
+</body>
+</html>
