@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        
+        .container {
+            width: 100%;
+            max-width: 1500px; /* Increased width */
+            margin: 20px auto;
+            background: white;
+            padding: 30px; /* Increased padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+
+    
+        table {
+            width: 100%; /* You can change this to a fixed value like 90% or 1200px */
+            max-width: 1200px; /* Prevents it from being too wide */
+            border-collapse: collapse;
+            margin: 20px auto; /* Adds space and centers the table */
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            padding: 15px; /* Increases inner spacing */
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        .status {
+            font-weight: bold;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .status-pending {
+            color: #ff9800;
+        }
+
+        .status-approved {
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Doctor Dashboard</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Phone Number</th>
+                    <th>Lab Assistant</th>
+                    {% for key in users[0]['test_values'].keys() %}
+                        <th>{{ key }}</th>
+                    {% endfor %}
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.lab_assistant }}</td>
+                    {% for value in user.test_values.values() %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                    <td>
+                        {% if user.status %}
+                            <span class="status status-approved">{{ user.status }}</span>
+                        {% else %}
+                            <span class="status status-pending">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form action="{{ url_for('predict', user_id=user._id) }}" method="POST">
+                            <button type="submit" class="btn">Predict</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
