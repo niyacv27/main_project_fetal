@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="text-center">
+            <h2 class="mb-4">Prediction Result</h2>
+            
+            <!-- Prediction Outcome -->
+            <div class="alert alert-info">
+                <h4>The predicted fetal health condition is: <strong>{{ prediction }}</strong></h4>
+            </div>
+
+            <!-- Probability Scores -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Prediction Confidence:</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">Normal: {{ probabilities[0] | round(3) }}</li>
+                        <li class="list-group-item">Suspect: {{ probabilities[1] | round(3) }}</li>
+                        <li class="list-group-item">Pathological: {{ probabilities[2] | round(3) }}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Top Influencing Features -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Top 3 Influencing Features:</h5>
+                    <ul class="list-group">
+                        {% for feature, importance in top_features %}
+                            <li class="list-group-item">
+                                <strong>{{ feature }}</strong>: {{ importance | round(3) }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <a href="/" class="btn btn-primary mt-4">Go Back</a>
+        </div>
+    </div>
+</body>
+</html>
