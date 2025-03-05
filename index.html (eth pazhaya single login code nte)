@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetal Health Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Fetal Health Prediction</h2>
+        <form action="/predict" method="POST">
+
+            <div class="input-group">
+                <label>Baseline Value:</label>
+                <input type="number" step="any" name="baseline_value" required>
+            </div>
+            <div class="input-group">
+                <label>Accelerations:</label>
+                <input type="number" step="any" name="accelerations" required>
+            </div>
+            <div class="input-group">
+                <label>Fetal Movement:</label>
+                <input type="number" step="any" name="fetal_movement" required>
+            </div>
+            <div class="input-group">
+                <label>Uterine Contractions:</label>
+                <input type="number" step="any" name="uterine_contractions" required>
+            </div>
+            <div class="input-group">
+                <label>Light Decelerations:</label>
+                <input type="number" step="any" name="light_decelerations" required>
+            </div>
+            <div class="input-group">
+                <label>Severe Decelerations:</label>
+                <input type="number" step="any" name="severe_decelerations" required>
+            </div>
+            <div class="input-group">
+                <label>Prolongued Decelerations:</label>
+                <input type="number" step="any" name="prolongued_decelerations" required>
+            </div>
+            <div class="input-group">
+                <label>Abnormal Short Term Variability:</label>
+                <input type="number" step="any" name="abnormal_short_term_variability" required>
+            </div>
+            <div class="input-group">
+                <label>Mean Value of Short Term Variability:</label>
+                <input type="number" step="any" name="mean_value_of_short_term_variability" required>
+            </div>
+            <div class="input-group">
+                <label>Percentage of Time with Abnormal Long Term Variability:</label>
+                <input type="number" step="any" name="percentage_of_time_with_abnormal_long_term_variability" required>
+            </div>
+            <div class="input-group">
+                <label>Mean Value of Long Term Variability:</label>
+                <input type="number" step="any" name="mean_value_of_long_term_variability" required>
+            </div>
+            <div class="input-group">
+                <label>Histogram Width:</label>
+                <input type="number" step="any" name="histogram_width" required>
+            </div>
+            <div class="input-group">
+                <label>Histogram Min:</label>
+                <input type="number" step="any" name="histogram_min" required>
+            </div>
+            <div class="input-group">
+                <label>Histogram Max:</label>
+                <input type="number" step="any" name="histogram_max" required>
+            </div>
+            <div class="input-group">
+                <label>Histogram Number of Peaks:</label>
+                <input type="number" step="any" name="histogram_number_of_peaks" required>
+            </div>
+            <div class="input-group">
+                <label>Histogram Number of Zeroes:</label>
+                <input type="number" step="any" name="histogram_number_of_zeroes" required>
+            </div>
+            <div class="input-group">
+                <label>Histogram Mode:</label>
+                <input type="number" step="any" name="histogram_mode" required>
+            </div>
+            <div class="input-group">
+                <label>Histogram Mean:</label>
+                <input type="number" step="any" name="histogram_mean" required>
+            </div>
+            <div class="input-group">
+                <label>Histogram Median:</label>
+                <input type="number" step="any" name="histogram_median" required>
+            </div>
+            <div class="input-group">
+                <label>Histogram Variance:</label>
+                <input type="number" step="any" name="histogram_variance" required>
+            </div>
+            <div class="input-group">
+                <label>Histogram Tendency:</label>
+                <input type="number" step="any" name="histogram_tendency" required>
+            </div>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        
+        
+</div>
+</body>
+</html>
